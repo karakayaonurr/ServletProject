@@ -36,6 +36,8 @@ public class LoginServlet extends HttpServlet
         boolean loginStatus = loginService.login(email, password);
         if (loginStatus)
         {
+            // session create
+            req.getSession().setAttribute("user", email);
             resp.sendRedirect(Util.url + "dashboard.jsp");
         }
         else

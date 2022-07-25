@@ -5,5 +5,6 @@ package utils;
  */
 public class Util
 {
-    public static String url = "http://localhost:8080/ServletProject_war/";
+    public static String sub_url = "ServletProject_war/";
+    public static String url = "http://localhost:8080/" + sub_url;
 }
