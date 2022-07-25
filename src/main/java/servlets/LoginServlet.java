@@ -6,6 +6,7 @@ import utils.Util;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +37,14 @@ public class LoginServlet extends HttpServlet
         boolean loginStatus = loginService.login(email, password);
         if (loginStatus)
         {
+            //cookie create
+            if (remember != null && remember.equals("on"))
+            {
+                Cookie cookie = new Cookie("user", email);
+                cookie.setMaxAge(60 * 60);
+                resp.addCookie(cookie);
+            }
+
             // session create
             req.getSession().setAttribute("user", email);
             resp.sendRedirect(Util.url + "dashboard.jsp");
