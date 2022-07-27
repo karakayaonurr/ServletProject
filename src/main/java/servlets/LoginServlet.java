@@ -1,5 +1,6 @@
 package servlets;
 
+import props.Admin;
 import services.LoginService;
 import utils.Util;
 
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by TCOKARAKAYA on 25.07.2022.
+ * Created by OnKa on 25.07.2022.
  */
 
 @WebServlet(name = "loginServlet", value = {"/login"})
@@ -34,8 +35,8 @@ public class LoginServlet extends HttpServlet
         String password = req.getParameter("password");
         String remember = req.getParameter("remember");
 
-        boolean loginStatus = loginService.login(email, password);
-        if (loginStatus)
+        Admin admin = loginService.login(email, password);
+        if (admin != null)
         {
             //cookie create
             if (remember != null && remember.equals("on"))
@@ -46,7 +47,7 @@ public class LoginServlet extends HttpServlet
             }
 
             // session create
-            req.getSession().setAttribute("user", email);
+            req.getSession().setAttribute("user", admin);
             resp.sendRedirect(Util.url + "dashboard.jsp");
         }
         else

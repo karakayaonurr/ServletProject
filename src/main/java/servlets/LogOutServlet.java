@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by TCOKARAKAYA on 25.07.2022.
+ * Created by OnKa on 25.07.2022.
  */
 @WebServlet(name = "logOutServlet", value = {"/logout"})
 public class LogOutServlet extends HttpServlet

@@ -1,7 +1,7 @@
 package utils;
 
 /**
- * Created by TCOKARAKAYA on 25.07.2022.
+ * Created by OnKa on 25.07.2022.
  */
 public class Util
 {

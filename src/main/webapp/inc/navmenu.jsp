@@ -1,13 +1,18 @@
 <%@ page import="utils.Util" %>
+<%@ page import="props.Admin" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%--
   Created by IntelliJ IDEA.
-  User: TCOKARAKAYA
+  User: OnKa
   Date: 25.07.2022
   Time: 11:42
   To change this template use File | Settings | File Templates.
 --%>
+
+<%
+    Admin admin = (Admin) request.getAttribute("admin");
+%>
 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
@@ -38,7 +43,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled"><%=request.getAttribute("email")%>
+                    <a class="nav-link disabled"><%=admin.getName()%>
                     </a>
                 </li>
             </ul>

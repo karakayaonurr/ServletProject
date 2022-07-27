@@ -1,5 +1,6 @@
 package config;
 
+import props.Admin;
 import utils.Util;
 
 import javax.servlet.Filter;
@@ -16,26 +17,28 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 /**
- * Created by TCOKARAKAYA on 25.07.2022.
+ * Created by OnKa on 25.07.2022.
  */
 
 // "*" her servlet için çalış demektir, servlet bazlı filter konulabilir
 @WebFilter("*")
 public class FilterWeb implements Filter
 {
-    // Uygulama ayakta olduğu andan itibaren çalışır
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException
     {
-        System.out.println("Server UP!");
+        System.out.println(" Server UP ");
     }
 
-    // Her request için çalışır
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException
     {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
+
+        req.setCharacterEncoding("UTF-8");
+        res.setCharacterEncoding("UTF-8");
 
         String agent = req.getHeader("user-agent");
         System.out.println(agent);
@@ -47,8 +50,6 @@ public class FilterWeb implements Filter
         System.out.println(sessionID);
 
         Enumeration<String> enumeration = req.getHeaderNames();
-        System.out.println(enumeration);
-
         while (enumeration.hasMoreElements())
         {
             String key = enumeration.nextElement();
@@ -56,12 +57,12 @@ public class FilterWeb implements Filter
             System.out.println(key + " : " + val);
         }
 
+
         String url = req.getRequestURI();
         url = url.replace(Util.sub_url, "");
 
         String[] urls = {"/", "/index.jsp", "/login"};
         boolean sessionStatus = true;
-
         for (String item : urls)
         {
             if (item.equals(url))
@@ -81,8 +82,8 @@ public class FilterWeb implements Filter
             }
             else
             {
-                String email = "" + req.getSession().getAttribute("user");
-                req.setAttribute("email", email);
+                Admin admin = (Admin) req.getSession().getAttribute("user");
+                req.setAttribute("admin", admin);
             }
         }
 
@@ -91,10 +92,13 @@ public class FilterWeb implements Filter
 
     private void cookieControl(HttpServletRequest req, HttpServletResponse res)
     {
-        if(req.getCookies() != null){
+        if (req.getCookies() != null)
+        {
             Cookie[] cookies = req.getCookies();
-            for(Cookie item: cookies){
-                if(item.getName().equals("user")){
+            for (Cookie item : cookies)
+            {
+                if (item.getName().equals("user"))
+                {
                     String data = item.getValue();
                     req.getSession().setAttribute("user", data);
                     break;
@@ -103,10 +107,9 @@ public class FilterWeb implements Filter
         }
     }
 
-    // Uygulama herhangi bir sebepten dolayı durduğunda çalışır
     @Override
     public void destroy()
     {
-        System.out.println("Server DOWN!");
+        System.out.println(" Server DOWN ");
     }
 }
